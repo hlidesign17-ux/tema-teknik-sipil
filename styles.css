@@ -18,12 +18,19 @@
   padding: 0;
 }
 
-html,
-body {
+/* DUKUNGAN CHROME & BRAVE MOBILE FULLSCREEN */
+html {
   width: 100%;
   height: 100%;
-  /* Menggunakan 100dvh untuk responsivitas sempurna di browser HP */
+  height: -webkit-fill-available; /* Fallback khusus Chrome Mobile & Safari */
+  overflow: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100vh;
   height: 100dvh;
+  min-height: -webkit-fill-available; /* Memaksa Chrome menggunakan layar penuh tanpa address bar */
   background-color: #09090b;
   color: var(--text-color);
   font-family: var(--font-sans);
@@ -33,11 +40,12 @@ body {
   align-items: center;
 }
 
-/* KONTAINER UTAMA (FULLSCREEN RESPONSIF DI HP) */
+/* KONTAINER UTAMA (FULLSCREEN DI HP CHROME & BRAVE) */
 .wedding-container {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   height: 100dvh;
+  min-height: -webkit-fill-available;
   margin: 0 auto;
   position: relative;
   background-color: var(--bg-color);
@@ -52,11 +60,17 @@ body {
   -ms-overflow-style: none;
 }
 
-/* TAMPILAN KHUSUS DESKTOP / LAPTOP (DIBINGKAI FRAME HP) */
+/* TAMPILAN KHUSUS DESKTOP / LAPTOP (FRAME SIMULASI HP) */
 @media (min-width: 500px) {
+  html,
+  body {
+    height: 100%;
+  }
+
   .wedding-container {
     width: var(--mobile-width);
     height: 92vh;
+    min-height: auto;
     max-height: var(--mobile-height);
     border-radius: 24px;
     border: 4px solid #27272a;
@@ -74,7 +88,8 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 100%;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
   overflow: hidden;
   scroll-snap-align: start;
   scroll-snap-stop: always;
