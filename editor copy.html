@@ -1,0 +1,1021 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visual Layout Editor - Undangan Pernikahan</title>
+
+    <!-- GOOGLE FONTS LENGKAP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@700&family=Cinzel:wght@600;700&family=Great+Vibes&family=Kaushan+Script&family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&family=Sacramento&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      body {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #18181b;
+        color: #f4f4f5;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        margin: 0;
+        user-select: none;
+      }
+
+      .preview-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #09090b;
+        padding: 20px;
+        height: 100vh;
+        box-sizing: border-box;
+      }
+
+      .preview-wrapper {
+        width: 390px;
+        height: 844px;
+        max-height: 92vh;
+        border: 3px solid #3f3f46;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9);
+        position: relative;
+        background: #000;
+      }
+
+      .preview-wrapper .wedding-container {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+      }
+
+      /* KELAS SELEKSI ELEMEN */
+      .draggable-item {
+        cursor: move !important;
+        pointer-events: auto !important;
+      }
+
+      .editable-selected {
+        outline: 2px dashed #d32f2f !important;
+        outline-offset: 4px;
+        background-color: rgba(211, 47, 47, 0.15) !important;
+      }
+
+      .glass-box.draggable-item {
+        pointer-events: auto !important;
+      }
+
+      /* CONTROL PANEL STYLES */
+      .control-panel {
+        width: 400px;
+        height: 100vh;
+        background-color: #18181b;
+        border-left: 1px solid #27272a;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        overflow-y: auto;
+        box-sizing: border-box;
+      }
+
+      .control-panel::-webkit-scrollbar {
+        width: 6px;
+      }
+      .control-panel::-webkit-scrollbar-track {
+        background: #18181b;
+      }
+      .control-panel::-webkit-scrollbar-thumb {
+        background: #3f3f46;
+        border-radius: 3px;
+      }
+      .control-panel::-webkit-scrollbar-thumb:hover {
+        background: #d32f2f;
+      }
+
+      .control-panel h2 {
+        font-size: 17px;
+        margin-top: 0;
+        margin-bottom: 16px;
+        color: #ffffff;
+        border-bottom: 1px solid #27272a;
+        padding-bottom: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 14px;
+      }
+
+      .form-group label {
+        display: block;
+        font-size: 11px;
+        color: #a1a1aa;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+      }
+
+      .form-group select,
+      .form-group input[type="text"],
+      .form-group input[type="file"] {
+        width: 100%;
+        padding: 8px 10px;
+        background-color: #27272a;
+        border: 1px solid #3f3f46;
+        color: #fff;
+        border-radius: 6px;
+        font-size: 12px;
+        outline: none;
+        box-sizing: border-box;
+      }
+
+      .control-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .control-row input[type="range"] {
+        flex: 1;
+        accent-color: #d32f2f;
+        cursor: pointer;
+      }
+
+      .control-row input[type="number"] {
+        width: 65px;
+        padding: 6px;
+        background-color: #27272a;
+        border: 1px solid #3f3f46;
+        color: #ef4444;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #27272a;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+      }
+
+      .toggle-row label {
+        margin: 0;
+        color: #fff;
+        text-transform: none;
+        font-size: 12px;
+      }
+
+      .btn-export {
+        margin-top: 15px;
+        margin-bottom: 20px;
+        background-color: #d32f2f;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: background 0.2s;
+        width: 100%;
+      }
+
+      .btn-export:hover {
+        background-color: #b71c1c;
+      }
+
+      .help-text {
+        font-size: 11px;
+        color: #71717a;
+        margin-top: 4px;
+      }
+
+      .panel-section-title {
+        font-size: 12px;
+        color: #ef4444;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin: 14px 0 10px 0;
+        padding-top: 10px;
+        border-top: 1px dashed #27272a;
+      }
+
+      .drag-hint {
+        background: rgba(211, 47, 47, 0.15);
+        border: 1px solid rgba(211, 47, 47, 0.4);
+        border-radius: 6px;
+        padding: 8px 10px;
+        font-size: 11px;
+        color: #f87171;
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-container">
+      <div class="preview-wrapper">
+        <main class="wedding-container" id="wedding-app"></main>
+      </div>
+    </div>
+
+    <!-- PANEL EDITING CONTROL -->
+    <div class="control-panel">
+      <h2>🛠️ Visual Layout Editor (Mobile-First)</h2>
+
+      <div class="drag-hint">
+        💡 <strong>Fitur Drag & Drop Aktif!</strong> Klik & tahan teks/kotak di
+        layar preview HP untuk menggesernya secara langsung.
+      </div>
+
+      <div class="form-group">
+        <label for="input-music-file">Pilih Musik dari Komputer (.mp3)</label>
+        <input type="file" id="input-music-file" accept="audio/mp3, audio/*" />
+        <div class="help-text" id="music-file-status">
+          File Musik Saat Ini: wedding-music.mp3
+        </div>
+      </div>
+
+      <hr style="border-color: #27272a; margin: 12px 0" />
+
+      <!-- PENGATURAN SEKSYEN & BACKGROUND -->
+      <div class="form-group">
+        <label for="select-section">Pilih Seksyen</label>
+        <select id="select-section"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="select-bg-effect">Efek Animation Background</label>
+        <select id="select-bg-effect">
+          <option value="none">Tanpa Efek (Static)</option>
+          <option value="breathe">Breathe / Pulse (Zoom In-Out Loop)</option>
+          <option value="zoom-in">Continuous Zoom In</option>
+          <option value="pan-left">Pan Horizontal (Geser Kiri-Kanan)</option>
+          <option value="pan-up">Pan Vertical (Geser Atas-Bawah)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Durasi Animasi Background (Detik)</label>
+        <div class="control-row">
+          <input type="range" id="range-breathe" min="4" max="30" value="12" />
+          <input type="number" id="num-breathe" value="12" /> s
+        </div>
+      </div>
+
+      <!-- KONTROL GLASS BOX -->
+      <div class="panel-section-title">🔲 Glass Box (Rectangle Blur)</div>
+
+      <div class="toggle-row">
+        <label for="check-glass-enable"
+          >Aktifkan Glass Box pada Seksyen ini</label
+        >
+        <input
+          type="checkbox"
+          id="check-glass-enable"
+          style="accent-color: #d32f2f; transform: scale(1.3)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Tingkat Transparansi / Opasitas (%)</label>
+        <div class="control-row">
+          <input
+            type="range"
+            id="range-glass-opacity"
+            min="0"
+            max="100"
+            value="82"
+          />
+          <input type="number" id="num-glass-opacity" value="82" /> %
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Lebar Glass Box (Width)</label>
+        <div class="control-row">
+          <input
+            type="range"
+            id="range-glass-w"
+            min="50"
+            max="380"
+            value="320"
+          />
+          <input type="number" id="num-glass-w" value="320" /> px
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Tinggi Glass Box (Height)</label>
+        <div class="control-row">
+          <input
+            type="range"
+            id="range-glass-h"
+            min="50"
+            max="750"
+            value="200"
+          />
+          <input type="number" id="num-glass-h" value="200" /> px
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Kelengkungan Sudut (Border Radius)</label>
+        <div class="control-row">
+          <input
+            type="range"
+            id="range-glass-radius"
+            min="0"
+            max="60"
+            value="12"
+          />
+          <input type="number" id="num-glass-radius" value="12" /> px
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Posisi Vertikal Glass Box (Y)</label>
+        <div class="control-row">
+          <input
+            type="range"
+            id="range-glass-y"
+            min="-380"
+            max="380"
+            value="0"
+          />
+          <input type="number" id="num-glass-y" value="0" /> px
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Posisi Horizontal Glass Box (X)</label>
+        <div class="control-row">
+          <input
+            type="range"
+            id="range-glass-x"
+            min="-180"
+            max="180"
+            value="0"
+          />
+          <input type="number" id="num-glass-x" value="0" /> px
+        </div>
+      </div>
+
+      <!-- PENGATURAN ELEMEN & FONT -->
+      <div class="panel-section-title">✏️ Pengaturan Teks & Elemen</div>
+
+      <div class="form-group">
+        <label for="select-element">Pilih Elemen / Teks / Ikon</label>
+        <select id="select-element"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="select-font">Pilihan Jenis Font</label>
+        <select id="select-font">
+          <optgroup label="Cursive & Calligraphy (Estetik/Kaligrafi)">
+            <option value="'Kaushan Script', cursive">
+              Kaushan Script (Brush)
+            </option>
+            <option value="'Caveat', cursive">Caveat (Handwriting)</option>
+            <option value="'Great Vibes', cursive">
+              Great Vibes (Classic Calligraphy)
+            </option>
+            <option value="'Sacramento', cursive">
+              Sacramento (Elegant Cursive)
+            </option>
+            <option value="'Alex Brush', cursive">
+              Alex Brush (Soft Script)
+            </option>
+          </optgroup>
+          <optgroup label="Serif (Formal & Mewah)">
+            <option value="'Playfair Display', serif">
+              Playfair Display (Classic Serif)
+            </option>
+            <option value="'Cinzel', serif">Cinzel (Luxury Vintage)</option>
+          </optgroup>
+          <optgroup label="Sans-Serif (Modern & Clean)">
+            <option value="'Plus Jakarta Sans', sans-serif">
+              Plus Jakarta Sans (Modern)
+            </option>
+            <option value="'Montserrat', sans-serif">
+              Montserrat (Clean Geometric)
+            </option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="input-color">Warna Teks / Ikon</label>
+        <input
+          type="color"
+          id="input-color"
+          value="#1A1A1A"
+          style="
+            width: 100%;
+            height: 36px;
+            border: 1px solid #3f3f46;
+            background: #27272a;
+            border-radius: 6px;
+          "
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Posisi Vertikal Teks (Y)</label>
+        <div class="control-row">
+          <input type="range" id="range-y" min="-380" max="380" value="0" />
+          <input type="number" id="num-y" value="0" /> px
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Posisi Horizontal Teks (X)</label>
+        <div class="control-row">
+          <input type="range" id="range-x" min="-180" max="180" value="0" />
+          <input type="number" id="num-x" value="0" /> px
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Rotasi Teks (Rotate)</label>
+        <div class="control-row">
+          <input
+            type="range"
+            id="range-rotate"
+            min="-180"
+            max="180"
+            value="0"
+          />
+          <input type="number" id="num-rotate" value="0" /> °
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Ukuran Font</label>
+        <div class="control-row">
+          <input type="range" id="range-size" min="10" max="72" value="16" />
+          <input type="number" id="num-size" value="16" /> px
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="input-text">Isi Teks</label>
+        <input type="text" id="input-text" />
+      </div>
+
+      <button class="btn-export" id="btn-save">💾 Export data.json Baru</button>
+    </div>
+
+    <script>
+      let globalJsonData = null;
+      let selectedSectionId = "section1";
+      let selectedElementId = null;
+
+      // VARIABEL STATE UNTUK DRAG & DROP
+      let isDragging = false;
+      let activeDragTarget = null; // 'element' atau 'glass'
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let initialObjX = 0;
+      let initialObjY = 0;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById("wedding-app");
+
+        fetch("data.json")
+          .then((res) => res.json())
+          .then((data) => {
+            globalJsonData = data;
+            initEditor();
+            renderPreview();
+          })
+          .catch((err) =>
+            console.error("Gagal membaca data.json. Gunakan Live Server!", err),
+          );
+
+        function initEditor() {
+          const secSelect = document.getElementById("select-section");
+          secSelect.innerHTML = "";
+
+          globalJsonData.sections.forEach((sec) => {
+            const opt = document.createElement("option");
+            opt.value = sec.id;
+            opt.textContent = `Seksyen ${sec.id.replace("section", "")}`;
+            secSelect.appendChild(opt);
+          });
+
+          secSelect.addEventListener("change", (e) => {
+            selectedSectionId = e.target.value;
+            updateSectionControls();
+            updateElementDropdown();
+            scrollToSection(selectedSectionId);
+          });
+
+          const musicFileInput = document.getElementById("input-music-file");
+          const musicStatus = document.getElementById("music-file-status");
+
+          if (globalJsonData.musicUrl) {
+            musicStatus.textContent = `File Musik Saat Ini: ${globalJsonData.musicUrl}`;
+          }
+
+          musicFileInput.addEventListener("change", (e) => {
+            if (e.target.files.length > 0) {
+              const fileName = e.target.files[0].name;
+              globalJsonData.musicUrl = fileName;
+              musicStatus.textContent = `File Musik Dipilih: ${fileName}`;
+              alert(
+                `Musik "${fileName}" dipilih. Pastikan file MP3 tersebut disimpan di dalam folder proyek yang sama!`,
+              );
+            }
+          });
+
+          updateSectionControls();
+          updateElementDropdown();
+          bindInputEvents();
+          initDragAndDropListeners();
+        }
+
+        function updateSectionControls() {
+          const currentSec = globalJsonData.sections.find(
+            (s) => s.id === selectedSectionId,
+          );
+          if (!currentSec) return;
+
+          const bgEffectSelect = document.getElementById("select-bg-effect");
+          bgEffectSelect.value =
+            currentSec.bgEffect || (currentSec.bgBreathe ? "breathe" : "none");
+          syncControls("breathe", currentSec.breatheDuration || 12);
+
+          if (!currentSec.glassBox) {
+            currentSec.glassBox = {
+              enabled: false,
+              opacity: 82,
+              width: 320,
+              height: 200,
+              transformX: 0,
+              transformY: 0,
+              borderRadius: 12,
+            };
+          }
+          const gBox = currentSec.glassBox;
+          document.getElementById("check-glass-enable").checked =
+            gBox.enabled ?? false;
+          syncControls(
+            "glass-opacity",
+            gBox.opacity !== undefined ? gBox.opacity : 82,
+          );
+          syncControls("glass-w", gBox.width || 320);
+          syncControls("glass-h", gBox.height || 200);
+          syncControls(
+            "glass-radius",
+            gBox.borderRadius !== undefined ? gBox.borderRadius : 12,
+          );
+          syncControls("glass-x", gBox.transformX || 0);
+          syncControls("glass-y", gBox.transformY || 0);
+        }
+
+        function updateElementDropdown() {
+          const elSelect = document.getElementById("select-element");
+          elSelect.innerHTML = "";
+
+          const currentSec = globalJsonData.sections.find(
+            (s) => s.id === selectedSectionId,
+          );
+
+          if (currentSec.content) {
+            currentSec.content.forEach((item) => {
+              const opt = document.createElement("option");
+              opt.value = item.id;
+              opt.textContent = `[Teks] ${item.id}`;
+              elSelect.appendChild(opt);
+            });
+          }
+
+          if (currentSec.icons) {
+            currentSec.icons.forEach((icon) => {
+              const opt = document.createElement("option");
+              opt.value = icon.id;
+              opt.textContent = `[Ikon] ${icon.id}`;
+              elSelect.appendChild(opt);
+            });
+          }
+
+          elSelect.addEventListener("change", (e) => {
+            selectedElementId = e.target.value;
+            loadElementToControls();
+            highlightSelectedElement();
+          });
+
+          if (elSelect.options.length > 0) {
+            selectedElementId = elSelect.options[0].value;
+            loadElementToControls();
+            highlightSelectedElement();
+          }
+        }
+
+        function loadElementToControls() {
+          const target = findElementObject(selectedElementId);
+          if (!target) return;
+
+          syncControls("y", target.transformY || 0);
+          syncControls("x", target.transformX || 0);
+          syncControls("rotate", target.rotate || 0);
+          syncControls("size", parseInt(target.style?.fontSize) || 16);
+
+          document.getElementById("select-font").value =
+            target.style?.fontFamily || "'Plus Jakarta Sans', sans-serif";
+          document.getElementById("input-color").value =
+            target.style?.color || target.color || "#1A1A1A";
+          document.getElementById("input-text").value =
+            target.text || target.symbol || "";
+        }
+
+        function syncControls(type, val) {
+          const rangeEl = document.getElementById(`range-${type}`);
+          const numEl = document.getElementById(`num-${type}`);
+          if (rangeEl) rangeEl.value = val;
+          if (numEl) numEl.value = val;
+        }
+
+        function bindInputEvents() {
+          document
+            .getElementById("select-bg-effect")
+            .addEventListener("change", (e) => {
+              const currentSec = globalJsonData.sections.find(
+                (s) => s.id === selectedSectionId,
+              );
+              if (currentSec) {
+                currentSec.bgEffect = e.target.value;
+                currentSec.bgBreathe = e.target.value !== "none";
+                renderPreview();
+              }
+            });
+
+          document
+            .getElementById("check-glass-enable")
+            .addEventListener("change", (e) => {
+              const currentSec = globalJsonData.sections.find(
+                (s) => s.id === selectedSectionId,
+              );
+              if (currentSec) {
+                if (!currentSec.glassBox) currentSec.glassBox = {};
+                currentSec.glassBox.enabled = e.target.checked;
+                renderPreview();
+              }
+            });
+
+          const sliderTypes = [
+            "breathe",
+            "y",
+            "x",
+            "rotate",
+            "size",
+            "glass-opacity",
+            "glass-w",
+            "glass-h",
+            "glass-radius",
+            "glass-x",
+            "glass-y",
+          ];
+
+          sliderTypes.forEach((type) => {
+            const range = document.getElementById(`range-${type}`);
+            const num = document.getElementById(`num-${type}`);
+            if (!range || !num) return;
+
+            range.addEventListener("input", (e) => {
+              num.value = e.target.value;
+              applyStyleUpdate(type, e.target.value);
+            });
+
+            num.addEventListener("input", (e) => {
+              range.value = e.target.value;
+              applyStyleUpdate(type, e.target.value);
+            });
+          });
+
+          document
+            .getElementById("select-font")
+            .addEventListener("change", (e) =>
+              updateStyle("fontFamily", e.target.value),
+            );
+          document
+            .getElementById("input-color")
+            .addEventListener("input", (e) =>
+              updateStyle("color", e.target.value),
+            );
+          document
+            .getElementById("input-text")
+            .addEventListener("input", (e) =>
+              updateStyle("text", e.target.value),
+            );
+          document
+            .getElementById("btn-save")
+            .addEventListener("click", downloadJson);
+        }
+
+        function applyStyleUpdate(type, val) {
+          const parsedVal = parseInt(val) || 0;
+          const currentSec = globalJsonData.sections.find(
+            (s) => s.id === selectedSectionId,
+          );
+
+          if (type === "breathe") {
+            if (currentSec) currentSec.breatheDuration = parsedVal;
+            renderPreview();
+          } else if (type.startsWith("glass-")) {
+            if (currentSec) {
+              if (!currentSec.glassBox) currentSec.glassBox = {};
+              if (type === "glass-opacity")
+                currentSec.glassBox.opacity = parsedVal;
+              if (type === "glass-w") currentSec.glassBox.width = parsedVal;
+              if (type === "glass-h") currentSec.glassBox.height = parsedVal;
+              if (type === "glass-radius")
+                currentSec.glassBox.borderRadius = parsedVal;
+              if (type === "glass-x")
+                currentSec.glassBox.transformX = parsedVal;
+              if (type === "glass-y")
+                currentSec.glassBox.transformY = parsedVal;
+              renderPreview();
+            }
+          } else {
+            if (type === "y") updateStyle("transformY", parsedVal);
+            if (type === "x") updateStyle("transformX", parsedVal);
+            if (type === "rotate") updateStyle("rotate", parsedVal);
+            if (type === "size") updateStyle("fontSize", `${parsedVal}px`);
+          }
+        }
+
+        function updateStyle(key, value) {
+          const target = findElementObject(selectedElementId);
+          if (!target) return;
+
+          if (!target.style) target.style = {};
+
+          if (
+            key === "transformY" ||
+            key === "transformX" ||
+            key === "rotate"
+          ) {
+            target[key] = value;
+          } else if (key === "fontSize") {
+            target.style.fontSize = value;
+          } else if (key === "fontFamily") {
+            target.style.fontFamily = value;
+          } else if (key === "color") {
+            target.style.color = value;
+            if (target.symbol !== undefined) target.color = value;
+          } else if (key === "text") {
+            if (target.text !== undefined) target.text = value;
+            if (target.symbol !== undefined) target.symbol = value;
+          }
+
+          renderPreview();
+        }
+
+        function findElementObject(id) {
+          for (let sec of globalJsonData.sections) {
+            let item = sec.content?.find((i) => i.id === id);
+            if (item) return item;
+            if (sec.icons) {
+              let icon = sec.icons.find((i) => i.id === id);
+              if (icon) return icon;
+            }
+          }
+          return null;
+        }
+
+        function getItemClass(id) {
+          if (id.includes("sub") || id.includes("header")) return "sub-header";
+          if (id.includes("main")) return "main-title";
+          if (id.includes("title")) return "section-title";
+          if (id.includes("name")) return "name-title";
+          if (id.includes("tag") || id.includes("badge")) return "accent-text";
+          if (id.includes("body")) return "body-text";
+          if (id.includes("quote")) return "quote-text";
+          if (id.includes("parent")) return "parent-text";
+          if (id.includes("footer")) return "footer-text";
+          if (id.includes("amp")) return "ampersand";
+          return "";
+        }
+
+        // LOGIKA DRAG & DROP INTERAKTIF DENGAN MOUSE / TOUCH
+        function initDragAndDropListeners() {
+          window.addEventListener("mousedown", handleDragStart);
+          window.addEventListener("mousemove", handleDragMove);
+          window.addEventListener("mouseup", handleDragEnd);
+
+          window.addEventListener(
+            "touchstart",
+            (e) => handleDragStart(e.touches[0]),
+            { passive: false },
+          );
+          window.addEventListener(
+            "touchmove",
+            (e) => handleDragMove(e.touches[0]),
+            { passive: false },
+          );
+          window.addEventListener("touchend", handleDragEnd);
+        }
+
+        function handleDragStart(e) {
+          const targetNode = e.target.closest(".draggable-item");
+          if (!targetNode) return;
+
+          isDragging = true;
+          dragStartX = e.clientX;
+          dragStartY = e.clientY;
+
+          if (targetNode.classList.contains("glass-box")) {
+            activeDragTarget = "glass";
+            const currentSec = globalJsonData.sections.find(
+              (s) => s.id === selectedSectionId,
+            );
+            initialObjX = currentSec.glassBox?.transformX || 0;
+            initialObjY = currentSec.glassBox?.transformY || 0;
+          } else {
+            activeDragTarget = "element";
+            const elementId = targetNode.id.replace("node-", "");
+            selectedElementId = elementId;
+            document.getElementById("select-element").value = elementId;
+            loadElementToControls();
+            highlightSelectedElement();
+
+            const targetObj = findElementObject(elementId);
+            initialObjX = targetObj.transformX || 0;
+            initialObjY = targetObj.transformY || 0;
+          }
+        }
+
+        function handleDragMove(e) {
+          if (!isDragging) return;
+
+          const deltaX = Math.round(e.clientX - dragStartX);
+          const deltaY = Math.round(e.clientY - dragStartY);
+
+          const newX = initialObjX + deltaX;
+          const newY = initialObjY + deltaY;
+
+          if (activeDragTarget === "glass") {
+            const currentSec = globalJsonData.sections.find(
+              (s) => s.id === selectedSectionId,
+            );
+            if (currentSec && currentSec.glassBox) {
+              currentSec.glassBox.transformX = newX;
+              currentSec.glassBox.transformY = newY;
+              syncControls("glass-x", newX);
+              syncControls("glass-y", newY);
+              renderPreview();
+            }
+          } else if (activeDragTarget === "element") {
+            const targetObj = findElementObject(selectedElementId);
+            if (targetObj) {
+              targetObj.transformX = newX;
+              targetObj.transformY = newY;
+              syncControls("x", newX);
+              syncControls("y", newY);
+              renderPreview();
+            }
+          }
+        }
+
+        function handleDragEnd() {
+          isDragging = false;
+          activeDragTarget = null;
+        }
+
+        function renderPreview() {
+          container.innerHTML = "";
+
+          globalJsonData.sections.forEach((sec) => {
+            const secEl = document.createElement("section");
+            secEl.id = sec.id;
+
+            const bgEffect =
+              sec.bgEffect || (sec.bgBreathe ? "breathe" : "none");
+            let bgEffectClass =
+              bgEffect !== "none" ? `bg-effect-${bgEffect}` : "";
+
+            secEl.className = `wedding-section bg-in-view ${bgEffectClass}`;
+            secEl.style.setProperty(
+              "--breathe-duration",
+              `${sec.breatheDuration || 12}s`,
+            );
+
+            // RENDER GLASS BOX
+            let glassBoxHtml = "";
+            if (sec.glassBox && sec.glassBox.enabled) {
+              const g = sec.glassBox;
+              const w = g.width || 320;
+              const h = g.height || 200;
+              const x = g.transformX || 0;
+              const y = g.transformY || 0;
+              const r = g.borderRadius !== undefined ? g.borderRadius : 12;
+              const op = g.opacity !== undefined ? g.opacity / 100 : 0.82;
+
+              const glassStyle = `width: ${w}px; height: ${h}px; margin-left: -${w / 2}px; margin-top: -${h / 2}px; border-radius: ${r}px; background: rgba(247, 244, 238, ${op}); transform: translate3d(${x}px, ${y}px, 0);`;
+              glassBoxHtml = `<div class="glass-box draggable-item" style="${glassStyle}"></div>`;
+            }
+
+            let elementsHtml = "";
+
+            sec.content.forEach((item) => {
+              const cssClass = getItemClass(item.id);
+              const isSelected =
+                item.id === selectedElementId ? "editable-selected" : "";
+
+              const fontSizeStyle = item.style?.fontSize
+                ? `font-size: ${item.style.fontSize};`
+                : "";
+              const fontFamilyStyle = item.style?.fontFamily
+                ? `font-family: ${item.style.fontFamily};`
+                : "";
+              const colorStyle = item.style?.color
+                ? `color: ${item.style.color};`
+                : "";
+
+              const transformStyle = `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) translate3d(${item.transformX || 0}px, ${item.transformY || 0}px, 0) rotate(${item.rotate || 0}deg); ${fontSizeStyle} ${fontFamilyStyle} ${colorStyle} width: max-content; max-width: 90%; text-align: center; z-index: 2; margin: 0;`;
+
+              if (item.type === "button") {
+                const btnClass = item.id.includes("map")
+                  ? "map-btn"
+                  : "social-btn";
+                elementsHtml += `<a href="#" class="${btnClass} ${isSelected} draggable-item" id="node-${item.id}" style="${transformStyle}">${item.text}</a>`;
+              } else if (item.type === "info_item") {
+                elementsHtml += `
+                <div class="info-item ${isSelected} draggable-item" id="node-${item.id}" style="${transformStyle}">
+                  <span class="info-icon">${item.icon}</span>
+                  <span>${item.text}</span>
+                </div>`;
+              } else {
+                elementsHtml += `<div class="${cssClass} ${isSelected} draggable-item" id="node-${item.id}" style="${transformStyle}">${item.text}</div>`;
+              }
+            });
+
+            if (sec.icons) {
+              sec.icons.forEach((ic) => {
+                const isSelected =
+                  ic.id === selectedElementId ? "editable-selected" : "";
+
+                const transformStyle = `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) translate3d(${ic.transformX || 0}px, ${ic.transformY || 0}px, 0) rotate(${ic.rotate || 0}deg); color: ${ic.color || ic.style?.color || "#D32F2F"}; z-index: 3; margin: 0;`;
+
+                elementsHtml += `<span class="icon-heart ${isSelected} draggable-item" id="node-${ic.id}" style="${transformStyle}">${ic.symbol}</span>`;
+              });
+            }
+
+            secEl.innerHTML = `
+              ${glassBoxHtml}
+              ${elementsHtml}
+            `;
+
+            container.appendChild(secEl);
+          });
+
+          scrollToSection(selectedSectionId);
+        }
+
+        function scrollToSection(id) {
+          const targetSec = document.getElementById(id);
+          if (targetSec) targetSec.scrollIntoView({ behavior: "smooth" });
+        }
+
+        function highlightSelectedElement() {
+          document
+            .querySelectorAll(".editable-selected")
+            .forEach((el) => el.classList.remove("editable-selected"));
+          const activeNode = document.getElementById(
+            `node-${selectedElementId}`,
+          );
+          if (activeNode) activeNode.classList.add("editable-selected");
+        }
+
+        function downloadJson() {
+          const dataStr =
+            "data:text/json;charset=utf-8," +
+            encodeURIComponent(JSON.stringify(globalJsonData, null, 2));
+          const downloadAnchor = document.createElement("a");
+          downloadAnchor.setAttribute("href", dataStr);
+          downloadAnchor.setAttribute("download", "data.json");
+          document.body.appendChild(downloadAnchor);
+          downloadAnchor.click();
+          downloadAnchor.remove();
+        }
+      });
+    </script>
+  </body>
+</html>

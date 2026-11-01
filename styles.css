@@ -1,0 +1,362 @@
+/* ROOT CSS VARIABLES */
+:root {
+  --bg-color: #f7f4ee;
+  --text-color: #1a1a1a;
+  --accent-red: #d32f2f;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-script: "Kaushan Script", "Caveat", cursive;
+  --font-serif: "Playfair Display", serif;
+
+  --mobile-width: 390px;
+  --mobile-height: 844px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background-color: #09090b;
+  color: var(--text-color);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wedding-container {
+  width: 100%;
+  max-width: var(--mobile-width);
+  height: 100%;
+  max-height: var(--mobile-height);
+  margin: 0 auto;
+  position: relative;
+  background-color: var(--bg-color);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+  border-radius: 0px;
+
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+@media (min-width: 500px) {
+  .wedding-container {
+    height: 92vh;
+    border-radius: 24px;
+    border: 4px solid #27272a;
+  }
+}
+
+.wedding-container::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.wedding-section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.wedding-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+
+  opacity: 0;
+  transform: scale(1.15) translateZ(0);
+  transition:
+    transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+#section1::before {
+  background-image: url("section1.png");
+}
+#section2::before {
+  background-image: url("section2.png");
+}
+#section3::before {
+  background-image: url("section3.png");
+}
+#section4::before {
+  background-image: url("section4.png");
+}
+#section5::before {
+  background-image: url("section5.png");
+}
+#section6::before {
+  background-image: url("section6.png");
+}
+
+.wedding-section.bg-in-view::before {
+  opacity: 1;
+  transform: scale(1) translateZ(0);
+}
+
+@keyframes bgBreatheLoop {
+  0% {
+    transform: scale(1.1) translateZ(0);
+  }
+  50% {
+    transform: scale(1) translateZ(0);
+  }
+  100% {
+    transform: scale(1.1) translateZ(0);
+  }
+}
+
+.wedding-section.bg-in-view.bg-breathe-active::before,
+.wedding-section.bg-in-view.bg-effect-breathe::before {
+  animation: bgBreatheLoop var(--breathe-duration, 12s) ease-in-out infinite !important;
+}
+
+@keyframes bgZoomInLoop {
+  0% {
+    transform: scale(1) translateZ(0);
+  }
+  100% {
+    transform: scale(1.2) translateZ(0);
+  }
+}
+
+.wedding-section.bg-in-view.bg-effect-zoom-in::before {
+  animation: bgZoomInLoop var(--breathe-duration, 12s) ease-in-out infinite
+    alternate !important;
+}
+
+@keyframes bgPanLeftLoop {
+  0% {
+    transform: scale(1.15) translateX(0);
+  }
+  50% {
+    transform: scale(1.15) translateX(-4%);
+  }
+  100% {
+    transform: scale(1.15) translateX(0);
+  }
+}
+
+.wedding-section.bg-in-view.bg-effect-pan-left::before {
+  animation: bgPanLeftLoop var(--breathe-duration, 12s) ease-in-out infinite !important;
+}
+
+@keyframes bgPanUpLoop {
+  0% {
+    transform: scale(1.15) translateY(0);
+  }
+  50% {
+    transform: scale(1.15) translateY(-4%);
+  }
+  100% {
+    transform: scale(1.15) translateY(0);
+  }
+}
+
+.wedding-section.bg-in-view.bg-effect-pan-up::before {
+  animation: bgPanUpLoop var(--breathe-duration, 12s) ease-in-out infinite !important;
+}
+
+.glass-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  z-index: 1;
+  pointer-events: none;
+  transition:
+    width 0.1s ease,
+    height 0.1s ease,
+    transform 0.1s ease,
+    border-radius 0.1s ease;
+}
+
+.sub-header {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: lowercase;
+  color: var(--text-color);
+}
+
+.main-title {
+  font-family: var(--font-script);
+  font-size: 42px;
+  line-height: 1.2;
+  letter-spacing: 1px;
+}
+
+.section-title {
+  font-family: var(--font-script);
+  font-size: 36px;
+}
+
+.name-title {
+  font-family: var(--font-script);
+  font-size: 32px;
+}
+
+.accent-text {
+  font-family: var(--font-script);
+  font-size: 22px;
+  color: var(--accent-red);
+}
+
+.accent-red {
+  color: var(--accent-red);
+}
+
+.body-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.quote-text {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.parent-text {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.footer-text {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.ampersand {
+  font-family: var(--font-script);
+  font-size: 48px;
+  color: var(--accent-red);
+}
+
+.social-btn,
+.map-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--text-color);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 20px;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.map-btn {
+  border-radius: 25px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  text-align: left;
+}
+
+.info-icon {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.doodle-icon {
+  width: 22px;
+  height: 22px;
+  stroke: var(--text-color);
+}
+
+.doodle-icon-btn {
+  width: 16px;
+  height: 16px;
+  stroke: #ffffff;
+}
+
+.icon-heart {
+  color: var(--accent-red);
+}
+
+.animated-element {
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+.animated-element.in-view {
+  opacity: 1;
+}
+
+.music-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: var(--text-color);
+  color: var(--bg-color);
+  border: 2px solid var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.music-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--bg-color);
+}
+
+.music-btn.playing {
+  animation: spinMusic 6s linear infinite;
+}
+
+@keyframes spinMusic {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,622 @@
+{
+  "musicUrl": "wedding-music.mp3",
+  "sections": [
+    {
+      "id": "section1",
+      "bgBreathe": true,
+      "bgEffect": "breathe",
+      "breatheDuration": 12,
+      "glassBox": {
+        "enabled": true,
+        "width": 380,
+        "height": 200,
+        "transformX": 0,
+        "transformY": 350,
+        "borderRadius": 12,
+        "opacity": 1
+      },
+      "content": [
+        {
+          "id": "s1-subtext",
+          "text": "Ngunduh mantu",
+          "transformX": 0,
+          "transformY": -380,
+          "rotate": 0,
+          "style": {
+            "fontSize": "22px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-down",
+            "delay": 200
+          }
+        },
+        {
+          "id": "s1-title",
+          "text": "Doni <span class=\"accent-red\">&</span> Anita",
+          "transformX": 8,
+          "transformY": -333,
+          "rotate": 0,
+          "style": {
+            "fontSize": "61px",
+            "fontFamily": "'Kaushan Script', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "zoom-in",
+            "delay": 400
+          }
+        },
+        {
+          "id": "s1-badge",
+          "text": "...",
+          "transformX": 152,
+          "transformY": -250,
+          "rotate": 0,
+          "style": {
+            "fontSize": "22px",
+            "fontFamily": "'Kaushan Script', cursive",
+            "color": "#D32F2F"
+          },
+          "animation": {
+            "type": "fade-left",
+            "delay": 600
+          }
+        },
+        {
+          "id": "s1-footer",
+          "text": "Kepada Yth. Bapak/Ibu/Saudara/i",
+          "transformX": 0,
+          "transformY": 272,
+          "rotate": 0,
+          "style": {
+            "fontSize": "22px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#000000"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 800
+          }
+        }
+      ],
+      "icons": [
+        {
+          "id": "s1-icon-heart-1",
+          "symbol": "<p><span style=\"font-size: 50px;\">❤️</span></p>",
+          "transformX": -1,
+          "transformY": -40,
+          "rotate": -10,
+          "color": "#D32F2F",
+          "animation": {
+            "type": "pulse",
+            "delay": 900
+          },
+          "style": {
+            "fontSize": "56px"
+          }
+        },
+        {
+          "id": "s1-icon-heart-2",
+          "symbol": "<p><span style=\"font-size: 30px;\">❤️</span></p>",
+          "transformX": -117,
+          "transformY": 196,
+          "rotate": 23,
+          "color": "#D32F2F",
+          "animation": {
+            "type": "pulse",
+            "delay": 1100
+          },
+          "style": {}
+        }
+      ]
+    },
+    {
+      "id": "section2",
+      "bgBreathe": true,
+      "bgEffect": "zoom-in",
+      "breatheDuration": 12,
+      "glassBox": {
+        "enabled": true,
+        "width": 412,
+        "height": 200,
+        "transformX": 0,
+        "transformY": 350,
+        "borderRadius": 12,
+        "opacity": 37
+      },
+      "content": [
+        {
+          "id": "s2-header",
+          "text": "Dengan Penuh Syukur",
+          "transformX": 2,
+          "transformY": -372,
+          "rotate": 0,
+          "style": {
+            "fontSize": "29px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-down",
+            "delay": 200
+          }
+        },
+        {
+          "id": "s2-body",
+          "text": "Dengan memohon rahmat Allah, kami bermaksud mengadakan pesta pernikahan. Kehadiran dan doamu akan membuat hari itu jauh lebih bahagia.",
+          "transformX": -3,
+          "transformY": 295,
+          "rotate": 0,
+          "style": {
+            "fontSize": "17px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#d32f2f"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 400
+          }
+        },
+        {
+          "id": "s2-quote",
+          "text": "“Dan di antara tanda-tanda kebesaran-Nya, Dia menciptakan pasangan untukmu agar kamu merasa tenteram.”",
+          "transformX": 0,
+          "transformY": 370,
+          "rotate": 0,
+          "style": {
+            "fontSize": "14px",
+            "fontFamily": "'Playfair Display', serif",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 600
+          }
+        }
+      ],
+      "icons": [
+        {
+          "id": "s2-icon-heart",
+          "symbol": "♥",
+          "transformX": 47,
+          "transformY": 0,
+          "rotate": 0,
+          "color": "#D32F2F",
+          "animation": {
+            "type": "bounce",
+            "delay": 700
+          },
+          "style": {
+            "fontSize": "10px"
+          }
+        }
+      ]
+    },
+    {
+      "id": "section3",
+      "bgBreathe": true,
+      "bgEffect": "pan-left",
+      "breatheDuration": 12,
+      "glassBox": {
+        "enabled": true,
+        "width": 380,
+        "height": 200,
+        "transformX": 0,
+        "transformY": 350,
+        "borderRadius": 12,
+        "opacity": 21
+      },
+      "content": [
+        {
+          "id": "s3-sub",
+          "text": "dua orang, satu cerita",
+          "transformX": 0,
+          "transformY": -380,
+          "rotate": 0,
+          "style": {
+            "fontSize": "22px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-down",
+            "delay": 200
+          }
+        },
+        {
+          "id": "s3-main",
+          "text": "Mempelai Pria",
+          "transformX": 0,
+          "transformY": -337,
+          "rotate": 0,
+          "style": {
+            "fontSize": "36px",
+            "fontFamily": "'Kaushan Script', cursive",
+            "color": "#d32f2f"
+          },
+          "animation": {
+            "type": "zoom-in",
+            "delay": 300
+          }
+        },
+        {
+          "id": "s3-tag",
+          "text": "Si Ganteng",
+          "transformX": 114,
+          "transformY": -224,
+          "rotate": 0,
+          "style": {
+            "fontSize": "22px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#D32F2F"
+          },
+          "animation": {
+            "type": "fade-right",
+            "delay": 450
+          }
+        },
+        {
+          "id": "s3-name",
+          "text": "Doni",
+          "transformX": 106,
+          "transformY": -189,
+          "rotate": 0,
+          "style": {
+            "fontSize": "48px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 600
+          }
+        },
+        {
+          "id": "s3-parent",
+          "text": "putra dari<br><strong>Bapak Imran & Ibu Linda</strong>",
+          "transformX": 1,
+          "transformY": 292,
+          "rotate": 0,
+          "style": {
+            "fontSize": "31px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#ffffff"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 750
+          }
+        },
+        {
+          "id": "s3-btn",
+          "type": "button",
+          "text": " @doni09",
+          "transformX": 0,
+          "transformY": 368,
+          "rotate": 0,
+          "style": {
+            "fontSize": "15px",
+            "fontFamily": "'Plus Jakarta Sans', sans-serif",
+            "color": "#ffffff"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 900
+          }
+        }
+      ],
+      "icons": [
+        {
+          "id": "s3-icon-heart",
+          "symbol": "♥",
+          "transformX": 0,
+          "transformY": 0,
+          "rotate": 0,
+          "color": "#D32F2F",
+          "animation": {
+            "type": "pulse",
+            "delay": 500
+          }
+        }
+      ]
+    },
+    {
+      "id": "section4",
+      "bgBreathe": true,
+      "bgEffect": "pan-up",
+      "breatheDuration": 12,
+      "glassBox": {
+        "enabled": true,
+        "width": 380,
+        "height": 205,
+        "transformX": 0,
+        "transformY": 350,
+        "borderRadius": 12,
+        "opacity": 35
+      },
+      "content": [
+        {
+          "id": "s4-amp",
+          "text": "Mempelai Wanita",
+          "transformX": 0,
+          "transformY": -370,
+          "rotate": 0,
+          "style": {
+            "fontSize": "36px",
+            "fontFamily": "'Kaushan Script', cursive",
+            "color": "#b53030"
+          },
+          "animation": {
+            "type": "zoom-in",
+            "delay": 200
+          }
+        },
+        {
+          "id": "s4-badge",
+          "text": "si Manis",
+          "transformX": -113,
+          "transformY": -224,
+          "rotate": 0,
+          "style": {
+            "fontSize": "31px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#D32F2F"
+          },
+          "animation": {
+            "type": "fade-left",
+            "delay": 350
+          }
+        },
+        {
+          "id": "s4-name",
+          "text": "Anita",
+          "transformX": -120,
+          "transformY": -186,
+          "rotate": 0,
+          "style": {
+            "fontSize": "44px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 500
+          }
+        },
+        {
+          "id": "s4-parent",
+          "text": "putri dari<br><strong> Bapak Yudi & Ibu Nila</strong>",
+          "transformX": 0,
+          "transformY": 312,
+          "rotate": 0,
+          "style": {
+            "fontSize": "26px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 650
+          }
+        },
+        {
+          "id": "s4-btn",
+          "type": "button",
+          "text": " @anita17",
+          "transformX": 0,
+          "transformY": 380,
+          "rotate": 0,
+          "style": {
+            "fontSize": "12px",
+            "fontFamily": "'Plus Jakarta Sans', sans-serif",
+            "color": "#FFFFFF"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 800
+          }
+        }
+      ],
+      "icons": [
+        {
+          "id": "s4-icon-heart",
+          "symbol": "♥",
+          "transformX": 0,
+          "transformY": 0,
+          "rotate": 0,
+          "color": "#D32F2F",
+          "animation": {
+            "type": "pulse",
+            "delay": 400
+          }
+        }
+      ]
+    },
+    {
+      "id": "section5",
+      "bgBreathe": true,
+      "bgEffect": "breathe",
+      "breatheDuration": 12,
+      "glassBox": {
+        "enabled": false,
+        "width": 294,
+        "height": 200,
+        "transformX": 0,
+        "transformY": 0,
+        "borderRadius": 12
+      },
+      "content": [
+        {
+          "id": "s5-sub",
+          "text": "detail hari bahagia kami",
+          "transformX": 0,
+          "transformY": -363,
+          "rotate": 0,
+          "style": {
+            "fontSize": "30px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-down",
+            "delay": 200
+          }
+        },
+        {
+          "id": "s5-title",
+          "text": "Tanggal & Tempat",
+          "transformX": 0,
+          "transformY": -262,
+          "rotate": 0,
+          "style": {
+            "fontSize": "36px",
+            "fontFamily": "'Kaushan Script', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "zoom-in",
+            "delay": 350
+          }
+        },
+        {
+          "id": "s5-date",
+          "type": "info_item",
+          "icon": "<svg class=\"doodle-icon\" viewBox=\"0 0 24 24\"><path d=\"M19 4h-1V3c0-.6-.4-1-1-1s-1 .4-1 1v1H8V3c0-.6-.4-1-1-1s-1 .4-1 1v1H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h4v4H7v-4z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+          "text": "Minggu, 29 November 2026",
+          "transformX": 0,
+          "transformY": -211,
+          "rotate": 0,
+          "style": {
+            "fontSize": "28px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-right",
+            "delay": 500
+          }
+        },
+        {
+          "id": "s5-time",
+          "type": "info_item",
+          "icon": "<svg class=\"doodle-icon\" viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"9\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M12 7v5l3 3\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+          "text": "09:00 WIB",
+          "transformX": 0,
+          "transformY": -172,
+          "rotate": 0,
+          "style": {
+            "fontSize": "28px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-right",
+            "delay": 650
+          }
+        },
+        {
+          "id": "s5-loc",
+          "type": "info_item",
+          "icon": "<svg class=\"doodle-icon\" viewBox=\"0 0 24 24\"><path d=\"M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+          "text": "Jl. Medan Merdeka Utara, RT.3/RW.2, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110",
+          "transformX": 0,
+          "transformY": -60,
+          "rotate": 0,
+          "style": {
+            "fontSize": "26px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-right",
+            "delay": 800
+          }
+        },
+        {
+          "id": "s5-map",
+          "type": "button",
+          "url": "https://maps.app.goo.gl/3nP4UUbCwPFpAmsV7",
+          "text": "<svg class=\"doodle-icon-btn\" viewBox=\"0 0 24 24\"><path d=\"M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3zM9 3v15M15 6v15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg> Buka Peta",
+          "transformX": 0,
+          "transformY": 125,
+          "rotate": 0,
+          "style": {
+            "fontSize": "52px",
+            "fontFamily": "'Caveat', cursive",
+            "color": "#FFFFFF"
+          },
+          "animation": {
+            "type": "fade-up",
+            "delay": 950
+          }
+        }
+      ],
+      "icons": []
+    },
+    {
+      "id": "section6",
+      "bgBreathe": true,
+      "bgEffect": "zoom-in",
+      "breatheDuration": 12,
+      "glassBox": {
+        "enabled": true,
+        "width": 397,
+        "height": 116,
+        "transformX": 0,
+        "transformY": -380,
+        "borderRadius": 25,
+        "opacity": 0
+      },
+      "content": [
+        {
+          "id": "s6-sub",
+          "text": "Momen kami",
+          "transformX": 8,
+          "transformY": -342,
+          "rotate": 0,
+          "style": {
+            "fontSize": "23px",
+            "fontFamily": "'Kaushan Script', cursive",
+            "color": "#1A1A1A"
+          },
+          "animation": {
+            "type": "fade-down",
+            "delay": 200
+          }
+        },
+        {
+          "id": "s6-title",
+          "text": "Galeri",
+          "transformX": -1,
+          "transformY": -375,
+          "rotate": 0,
+          "style": {
+            "fontSize": "36px",
+            "fontFamily": "'Kaushan Script', cursive",
+            "color": "#d32f2f"
+          },
+          "animation": {
+            "type": "zoom-in",
+            "delay": 350
+          }
+        }
+      ],
+      "icons": [
+        {
+          "id": "s6-icon-heart",
+          "symbol": "♥",
+          "transformX": 0,
+          "transformY": 0,
+          "rotate": 0,
+          "color": "#D32F2F",
+          "animation": {
+            "type": "pulse",
+            "delay": 500
+          }
+        }
+      ]
+    }
+  ]
+}
