@@ -10,10 +10,79 @@ document.addEventListener("DOMContentLoaded", () => {
       renderSections(data.sections);
       initAudioPlayer(data.musicUrl);
       initIntersectionObserver();
+      initFullscreenHint(); // Inisialisasi petunjuk Fullscreen
     })
     .catch((error) => console.error("Error memuat data.json:", error));
 
-  // 2. Audio Player
+  // 2. Overlay Notifikasi Petunjuk Fullscreen untuk Mobile
+  function initFullscreenHint() {
+    // Hanya tampilkan jika dibuka di perangkat seluler / layar kecil
+    if (window.innerWidth <= 600) {
+      const hintOverlay = document.createElement("div");
+      hintOverlay.id = "fullscreen-hint";
+      hintOverlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100dvh;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #ffffff;
+        text-align: center;
+        padding: 20px;
+        cursor: pointer;
+        transition: opacity 0.4s ease;
+      `;
+
+      hintOverlay.innerHTML = `
+        <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 24px; border-radius: 20px; max-width: 300px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+          <div style="font-size: 36px; margin-bottom: 12px; animation: bounceHint 1.5s infinite;">👆</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 700; color: #fff;">Sentuh Layar</h3>
+          <p style="margin: 0; font-size: 13px; color: #d4d4d8; line-height: 1.5;">Ketuk 1x di mana saja untuk pengalaman Layar Penuh & Musik</p>
+        </div>
+      `;
+
+      document.body.appendChild(hintOverlay);
+
+      const handleUserTouch = () => {
+        // Minta Fullscreen Browser
+        const docEl = document.documentElement;
+        if (docEl.requestFullscreen) {
+          docEl.requestFullscreen().catch(() => {});
+        } else if (docEl.webkitRequestFullscreen) {
+          docEl.webkitRequestFullscreen();
+        }
+
+        // Hilangkan Notifikasi
+        hintOverlay.style.opacity = "0";
+        setTimeout(() => hintOverlay.remove(), 400);
+
+        // Putar Musik
+        if (audioPlayer && audioPlayer.paused) {
+          audioPlayer
+            .play()
+            .then(() => {
+              if (musicBtn) musicBtn.classList.add("playing");
+            })
+            .catch(() => {});
+        }
+      };
+
+      hintOverlay.addEventListener("click", handleUserTouch, { once: true });
+      hintOverlay.addEventListener("touchstart", handleUserTouch, {
+        once: true,
+      });
+    }
+  }
+
+  // 3. Audio Player
   function initAudioPlayer(musicUrl) {
     if (!musicUrl) return;
 
@@ -25,29 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
     musicBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>`;
     musicBtn.title = "Matikan / Putar Musik";
     document.body.appendChild(musicBtn);
-
-    const playPromise = audioPlayer.play();
-
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          musicBtn.classList.add("playing");
-        })
-        .catch(() => {
-          const enableAudioOnInteraction = () => {
-            audioPlayer.play().then(() => {
-              musicBtn.classList.add("playing");
-            });
-            window.removeEventListener("click", enableAudioOnInteraction);
-            window.removeEventListener("touchstart", enableAudioOnInteraction);
-            window.removeEventListener("scroll", enableAudioOnInteraction);
-          };
-
-          window.addEventListener("click", enableAudioOnInteraction);
-          window.addEventListener("touchstart", enableAudioOnInteraction);
-          window.addEventListener("scroll", enableAudioOnInteraction);
-        });
-    }
 
     musicBtn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -61,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 3. Merender Elemen HTML dari JSON
+  // 4. Merender Elemen HTML dari JSON
   function renderSections(sections) {
     container.innerHTML = "";
 
@@ -108,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ? `color: ${item.style.color};`
             : "";
 
-          // SETIAP ELEMEN DIGUNAKAN POSISI MANDIRI SECARA ABSOLUT PUSAT
           const transformStyle = `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) translate3d(${item.transformX || 0}px, ${item.transformY || 0}px, 0) rotate(${item.rotate || 0}deg); ${fontSizeStyle} ${fontFamilyStyle} ${colorStyle} width: max-content; max-width: 90%; text-align: center; z-index: 2; margin: 0;`;
 
           let contentText = item.text;
@@ -170,7 +215,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return "";
   }
 
-  // 4. Animasi Scroll Observer
+  // 5. Animasi Scroll Observer
   function initIntersectionObserver() {
     const observerOptions = {
       root: container,
@@ -229,21 +274,3 @@ document.addEventListener("DOMContentLoaded", () => {
       .forEach((sec) => sectionObserver.observe(sec));
   }
 });
-
-// Mengaktifkan mode Fullscreen browser saat pengguna berinteraksi pertama kali
-function requestFullScreenMode() {
-  const docEl = document.documentElement;
-  if (docEl.requestFullscreen) {
-    docEl.requestFullscreen();
-  } else if (docEl.webkitRequestFullscreen) {
-    /* Safari / iOS */
-    docEl.webkitRequestFullscreen();
-  } else if (docEl.msRequestFullscreen) {
-    /* IE/Edge */
-    docEl.msRequestFullscreen();
-  }
-}
-
-// Triggers saat tamu melakukan klik/sentuhan pertama di layar
-window.addEventListener("click", requestFullScreenMode, { once: true });
-window.addEventListener("touchstart", requestFullScreenMode, { once: true });
