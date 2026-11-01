@@ -229,3 +229,21 @@ document.addEventListener("DOMContentLoaded", () => {
       .forEach((sec) => sectionObserver.observe(sec));
   }
 });
+
+// Mengaktifkan mode Fullscreen browser saat pengguna berinteraksi pertama kali
+function requestFullScreenMode() {
+  const docEl = document.documentElement;
+  if (docEl.requestFullscreen) {
+    docEl.requestFullscreen();
+  } else if (docEl.webkitRequestFullscreen) {
+    /* Safari / iOS */
+    docEl.webkitRequestFullscreen();
+  } else if (docEl.msRequestFullscreen) {
+    /* IE/Edge */
+    docEl.msRequestFullscreen();
+  }
+}
+
+// Triggers saat tamu melakukan klik/sentuhan pertama di layar
+window.addEventListener("click", requestFullScreenMode, { once: true });
+window.addEventListener("touchstart", requestFullScreenMode, { once: true });
