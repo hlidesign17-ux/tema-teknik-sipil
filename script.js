@@ -10,14 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
       renderSections(data.sections);
       initAudioPlayer(data.musicUrl);
       initIntersectionObserver();
-      initFullscreenHint(); // Inisialisasi petunjuk Fullscreen
+      initFullscreenHint(); // Memanggil Petunjuk Fullscreen
     })
     .catch((error) => console.error("Error memuat data.json:", error));
 
-  // 2. Overlay Notifikasi Petunjuk Fullscreen untuk Mobile
+  // 2. Overlay Notifikasi Petunjuk Fullscreen untuk Perangkat Mobile & Touch
   function initFullscreenHint() {
-    // Hanya tampilkan jika dibuka di perangkat seluler / layar kecil
-    if (window.innerWidth <= 600) {
+    // Deteksi apakah dibuka di layar kecil ATAU perangkat layar sentuh (Mobile/Tablet)
+    const isMobileDevice =
+      window.innerWidth <= 768 ||
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0;
+
+    if (isMobileDevice) {
       const hintOverlay = document.createElement("div");
       hintOverlay.id = "fullscreen-hint";
       hintOverlay.style.cssText = `
@@ -26,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
         left: 0;
         width: 100vw;
         height: 100dvh;
-        background: rgba(0, 0, 0, 0.75);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        z-index: 99999;
+        background: rgba(0, 0, 0, 0.82);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 999999;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -38,21 +43,24 @@ document.addEventListener("DOMContentLoaded", () => {
         text-align: center;
         padding: 20px;
         cursor: pointer;
-        transition: opacity 0.4s ease;
+        transition: opacity 0.4s ease, visibility 0.4s ease;
       `;
 
       hintOverlay.innerHTML = `
-        <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 24px; border-radius: 20px; max-width: 300px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-          <div style="font-size: 36px; margin-bottom: 12px; animation: bounceHint 1.5s infinite;">👆</div>
-          <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: 700; color: #fff;">Sentuh Layar</h3>
-          <p style="margin: 0; font-size: 13px; color: #d4d4d8; line-height: 1.5;">Ketuk 1x di mana saja untuk pengalaman Layar Penuh & Musik</p>
+        <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); padding: 28px 20px; border-radius: 24px; max-width: 310px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); text-align: center;">
+          <div style="font-size: 42px; margin-bottom: 14px; animation: bounceHint 1.4s infinite ease-in-out;">👆</div>
+          <h3 style="margin: 0 0 8px 0; font-size: 17px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px;">Undangan Pernikahan</h3>
+          <p style="margin: 0 0 18px 0; font-size: 13px; color: #e4e4e7; line-height: 1.5;">Ketuk layar untuk membuka dalam tampilan Layar Penuh & memutar musik.</p>
+          <div style="display: inline-block; background: #d32f2f; color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 13px; font-weight: 600;">Buka Undangan</div>
         </div>
       `;
 
       document.body.appendChild(hintOverlay);
 
-      const handleUserTouch = () => {
-        // Minta Fullscreen Browser
+      const handleUserTouch = (e) => {
+        e.preventDefault();
+
+        // Mengaktifkan Mode Fullscreen Browser
         const docEl = document.documentElement;
         if (docEl.requestFullscreen) {
           docEl.requestFullscreen().catch(() => {});
@@ -60,11 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
           docEl.webkitRequestFullscreen();
         }
 
-        // Hilangkan Notifikasi
+        // Animasi Menghilangkan Overlay
         hintOverlay.style.opacity = "0";
+        hintOverlay.style.visibility = "hidden";
         setTimeout(() => hintOverlay.remove(), 400);
 
-        // Putar Musik
+        // Memutar Musik Otomatis Setelah Sentuhan Tamu
         if (audioPlayer && audioPlayer.paused) {
           audioPlayer
             .play()
