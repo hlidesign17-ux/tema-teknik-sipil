@@ -537,7 +537,7 @@
         {
           "id": "s5-map",
           "type": "button",
-          "url": "https://maps.app.goo.gl/3nP4UUbCwPFpAmsV7",
+          "url": "https://maps.app.goo.gl/3MEPjsoGQciJ8KSA7",
           "text": "<svg class=\"doodle-icon-btn\" viewBox=\"0 0 24 24\"><path d=\"M9 18l-6 3V6l6-3 6 3 6-3v15l-6 3-6-3zM9 3v15M15 6v15\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg> Buka Peta",
           "transformX": 0,
           "transformY": 125,
